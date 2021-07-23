@@ -1,6 +1,6 @@
 development:
   password: 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
-  theme_id: 125092855957
+  theme_id: 125094232213
   store: ean-astro-practice.myshopify.com
   timeout: 60s
   ignores:
