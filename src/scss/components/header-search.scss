@@ -1,0 +1,41 @@
+$search-button-size: 55px;
+
+.header-search {
+  width: 100vw;
+  z-index: $z-dropdown;
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, .05);
+
+  @include media-query($medium-up) {
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+
+  &__results {
+    max-height: 80vh;
+    background: #fff;
+    overflow-y: auto;
+  }
+}
+
+.search-form {
+  background: $background;
+
+  .container {
+    height: $header-search-height;
+  }
+
+  button {
+    width: $search-button-size;
+    height: $search-button-size;
+    font-size: 19px;
+  }
+
+  input {
+    border: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+  }
+}

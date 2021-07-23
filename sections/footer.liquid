@@ -1,0 +1,99 @@
+<section class="footer__top mt-4">
+  <div class="container text-center py-6">
+    {% render 'footer__newsletter' %}
+  </div>
+</section>
+
+<section class="footer__middle">
+  <div class="container py-4">
+    <div class="row">
+      <div class="col-md mb-4">
+        <a href="{{ shop.url }}" class="logo-image mb-4" title="Visit home page of {{ shop.name }}">
+          {% render 'icon-logo' %}
+        </a>
+
+        {%- assign social_accounts = 'Facebook, Twitter, Pinterest, Instagram, Snapchat, Tumblr, YouTube, Vimeo, LinkedIn' | split: ', ' -%}
+        <ul class="social-links d-flex">
+          {% for social in social_accounts %}
+            {%- assign social_handle = social | handleize -%}
+            {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
+            {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
+
+            {% if settings[social_link] != blank %}
+              <li class="mr-3">
+                <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}" target="_blank">
+                  {% include social_icon %}
+                  <span class="icon-fallback-text">{{ social }}</span>
+                </a>
+              </li>
+            {% endif %}
+
+          {% endfor %}
+        </ul>
+
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div class="col-md">
+          {%- assign linklist = block.settings.menu -%}
+          <h3 class="h5">{{ linklists[linklist].title }}</h3>
+          <nav>
+            <ul aria-label="footermenu" class="flex-column" role="menu">
+              {%- for link in linklists[linklist].links -%}
+                <li class="my-3" role="none">
+                  <a href="{{ link.url }}" role="menuitem">{{ link.title }}</a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </nav>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<section class="footer__bottom bg-primary text-light text-center">
+  <div class="container py-2">
+    <div class="d-md-flex justify-content-between">
+      <div>
+        {% unless shop.enabled_payment_types == empty %}
+          <span class="visually-hidden">{{ 'layout.footer.payment_methods' | t }}</span>
+          <ul class="d-flex justify-content-center">
+            {% for type in shop.enabled_payment_types %}
+              <li class="mr-2">
+                {{ type | payment_type_svg_tag }}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endunless %}
+      </div>
+      <div>
+        <small>&copy; {{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }}</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "footer",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "default": "footer"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

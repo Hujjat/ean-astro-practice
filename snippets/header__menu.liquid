@@ -1,0 +1,65 @@
+<transition name="slide-from-left">
+  <div v-show="isMenuOpen" class="navigation-menu d-lg-block">
+    <form action="/search" method="get" role="search" class="search-form d-lg-none mb-3 pl-3">
+      <div class="d-flex align-items-center justify-content-between">
+        <label for="Search-{{ section.id }}" class="label-hidden">
+          {{ 'general.search.placeholder' | t }}
+        </label>
+    
+        <input type="search"
+          ref="search"
+          name="q"
+          placeholder="{{ 'general.search.placeholder' | t }}"
+          autocomplete="off"
+          value="{{ search.terms | escape }}">
+        <input type="hidden" name="type" value="product" />
+    
+        <button type="submit">
+          {% render 'icon-search' %}
+          <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+        </button>
+      </div>
+    </form>
+    
+    <nav aria-label="main">
+      <ul role="menu" class="menu d-lg-flex justify-content-lg-center mx-lg-n3">
+        {% for link in linklists[section.settings.menu].links %}
+          <li role="none" class="menu__item">
+            <a role="menuitem" 
+              v-init-megamenu="'{{ link.handle }}'" 
+              href="{{ link.url }}" 
+              title="{{ link.title | escape }}" 
+              class="menu__link {%- if link.active %} menu__link--current {%- endif -%}" 
+              :class="{ 'menu__link--active': megamenuToggles['{{ link.handle }}'] }"
+            >
+              <strong>{{ link.title | escape }}</strong>
+              <span class="menu__arrow" :class="{ 'menu__arrow--active': megamenuToggles['{{ link.handle }}'] }">{% render 'icon-arrow-down' %}</span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+
+    {% if shop.customer_accounts_enabled %}
+      <nav class="d-md-none border-top mt-4 py-3">
+        <ul role="menu" aria-label="Customer links" class="menu">
+          {% if customer %}
+            <li class="menu__item" role="none" >
+              <a href="{{ routes.account_logout_url }}" role="menuitem" class="menu__link">{{ 'layout.customer.log_out' | t }}</a>
+            </li>
+            <li class="menu__item" role="none">
+              <a href="{{ routes.account_url }}" role="menuitem" class="menu__link">{{ 'layout.customer.account' | t }}</a>
+            </li>
+          {% else %}
+            <li class="menu__item" role="none">
+              <a href="{{ routes.account_login_url }}" role="menuitem" class="menu__link">{{ 'layout.customer.log_in' | t }}</a>
+            </li>
+            <li class="menu__item" role="none">
+              <a href="{{ routes.account_register_url }}" role="menuitem" class="menu__link">{{ 'layout.customer.create_account' | t }}</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+  </div>
+</transition>

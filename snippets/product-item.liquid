@@ -1,0 +1,14 @@
+<div class="product-item">
+  <a :href="product.url || url" :title="product.title">
+    <div class="product-item__image">
+      <img v-if="product.images.length" :data-src="product.images[0] | imageSize('500x')" :alt="product.title" class="product-item__image lazyload"/>
+      <template v-else>{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</template>
+      <span v-if="isSale" class="product-badge product-badge--sale">{{ 'products.product.on_sale' | t }}</span>
+    </div>
+    
+    <span class="product-item__title" role="heading" aria-level="3">${ product.title }</span>
+    
+    <span class="price" :class="{ 'price--sale': isSale }">${ product.price | currencyFromCents }</span> 
+    <s v-if="isSale" class="price price--old">${ product.compare_at_price | currencyFromCents }</s>
+  </a>
+</div>

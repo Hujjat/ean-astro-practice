@@ -1,0 +1,65 @@
+<transition name="slide-down">
+  <div v-show="isMinicartOpen" class="minicart cart">
+
+    <div v-if="cart && cart.item_count">
+      <div class="minicart__items">
+        <div v-for="(item, index) in cart.items" :key="item.key" class="minicart__item row mb-4">
+          <div class="mask mask--loading" v-if="item.isLoading"><span class="spinner">{{ 'general.misc.loading' | t }}</span></div>
+          <div class="minicart__item__image col-5">
+            <a :href="item.url" :title="item.product_title">
+              <img v-if="item.image" :data-src="item.image | imageSize('medium')" :alt="item.product_title" class="lazyload">
+              <template v-else>{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</template>
+            </a>
+          </div>
+          <div class="col-7">
+            <div class="product-name mb-2">
+              <a :href="item.url" :title="item.product_title">
+                {%- comment -%}
+                v-html used to render product_title incase of escaped characters. See template/cata.data.liquid
+                {%- endcomment -%}
+                <strong v-html="item.product_title"></strong>
+              </a>
+            </div>
+            <div v-if="item.has_variant" class="mb-2">
+              <div v-for="option in item.options_with_values" :key="option.name">
+                <strong>${ option.name }</strong>: <span>${ option.value }</span>
+              </div>
+            </div>
+            <div class="mb-2">
+              <span class="price" :class="{ 'price--sale': item.compare_at_price }">${ item.final_price | currencyFromCents }</span>
+              <s v-if="item.compare_at_price" class="price price--old">${ item.compare_at_price | currencyFromCents }</s>
+            </div>
+            <div class="field field--quantity">
+              <a href="javascript:" @click="item.quantity--; updateQuantity(item)">{% render 'icon-minus' %}</a>
+              <input v-model="item.quantity" @input="updateQuantity(item)" type="number">
+              <a href="javascript:" @click="item.quantity++; updateQuantity(item)">{% render 'icon-plus' %}</a>
+            </div>
+            <div v-if="item.message" class="my-2">
+              <small class="cart__item__message cart__item__message--error">${ item.message }</small>
+            </div>
+            <button @click="updateQuantity(item, 0)" class="cart__item__remove"><small>{{ 'cart.general.remove' | t }}</small></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <div class="subtotal"><strong>{{ 'cart.general.subtotal' | t }}</strong></div>
+        <div><strong>${ cart.total_price | currencyFromCents }</strong></div>  
+      </div>
+
+      <a href="{{ routes.cart_url }}" class="button button--secondary w-100 mt-3">
+        <span>{{ 'cart.general.view_cart' | t }}</span>
+      </a>
+
+      <a href="/checkout" class="button button--primary w-100 mt-3">
+        <span>{{ 'cart.general.checkout' | t }}</span>
+      </a>
+    </div>
+    <div v-else class="cart__empty text-center">
+      <p class="mb-3">{{ 'cart.general.empty' | t }}</p>
+      <button class="button" @click="toggleMinicart()">{{ 'cart.general.continue_browsing' | t }}</button>
+    </div>
+  </div>
+</transition>
+
+<div v-if="isMinicartOpen" class="mask" @click="toggleMinicart()"></div>

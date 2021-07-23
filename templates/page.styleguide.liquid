@@ -1,0 +1,373 @@
+<div vue-init v-cloak>
+  <h1>{{ page.title }}</h1>
+
+  <div class="rte">
+    {{ page.content }}
+  </div>
+
+  <hr/>
+
+  <ma-code class="mb-3">
+    <pre>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+          <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a href="{% raw %}{{ shop.url }}{% endraw %}" title="{% raw %}{{ shop.name | escape }}{% endraw %}" itemprop="item" itemscope itemtype="http://schema.org/Thing" itemid="/">
+              <span itemprop="name">{{ 'general.breadcrumbs.home' | t }}</span>
+            </a>
+            <meta itemprop="position" content="1" />
+          </li>
+          <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <span itemscope itemtype="http://schema.org/Thing" itemprop="item" itemid="{% raw %}{{ page.url }}{% endraw %}">
+              <span itemprop="name">{{ page.title }}</span>
+            </span>
+            <meta itemprop="position" content="2" />
+          </li>
+        </ol>
+      </nav>
+    </pre>
+  </ma-code>
+
+  <div class="mb-4">
+    <h2>Colours</h2>
+
+    {% comment %}
+    Color styles
+    ---
+    Colors need to exist here:
+    - src/scss/abstracts/variables
+    - src/scss/base/styleguide
+
+    {% endcomment %}
+
+    <div class="d-flex mb-3">
+      <div class="color-style color-style--primary"></div>
+      <div class="color-style color-style--secondary"></div>
+      <div class="color-style color-style--accent"></div>
+      <div class="color-style color-style--sale"></div>
+    </div>
+
+    <div>
+      <div class="color-style color-style--background"></div>
+    </div>
+  </div>
+
+  <div>
+    <h2>Typography</h2>
+
+    <ma-code class="mb-3">
+      <pre>
+        <h1>Heading 1</h1>
+        <h2>Heading 2</h2>
+        <h3>Heading 3</h3>
+        <h4>Heading 4</h4>
+        <h5>Heading 5</h5>
+        <h6>Heading 6</h6>
+      </pre>
+    </ma-code>
+
+    <ma-code class="mb-3">
+        <a class="link" href="#">Link Text</a>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <pre>
+        <p class="lead">Paragraph: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+          fugiat nulla pariatur.</p>
+        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="javascript:">Click here</a></p>
+      </pre>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <pre>
+        <ul class="list">
+          <li>List item</li>
+          <li>List item</li>
+          <li>List item</li>
+        </ul>
+      </pre>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <small>Small</small>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <s>Strikethrough</s>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <em>Italics</em>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <pre>
+        <div><strong>Strong</strong></div>
+        <div><b>Bold</b></div>
+      </pre>
+    </ma-code>
+  </div>
+
+  <hr/>
+
+  <div>
+    <h2>Buttons</h2>
+
+    <ma-code class="mb-3">
+      <button class="button">Default</button>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <button class="button button--primary">Primary</button>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <button class="button button--secondary">Secondary</button>
+    </ma-code>
+
+    <div class="bg-dark text-white p-5">
+      <h3 class="text-white mb-4">Buttons --dark</h3>
+
+      <ma-code class="mb-3">
+        <button class="button button--dark">Default</button>
+      </ma-code>
+
+      <ma-code class="mb-3">
+        <button class="button button--primary button--dark">Primary</button>
+      </ma-code>
+
+      <ma-code class="mb-3">
+        <button class="button button--secondary button--dark">Secondary</button>
+      </ma-code>
+    </div>
+  </div>
+
+  <hr/>
+
+  <div>
+    <h2>Forms</h2>
+
+    <ma-code class="mb-3">
+      <pre>
+        <div class="errors">
+          <ul>
+            <li>No account found with that email.</li>
+            <li>Sorry, this product is out of stock right now.</li>
+          </ul>
+        </div>
+      </pre>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <pre>
+        <p class="form-success">
+          {{ 'contact.form.post_success' | t }}
+        </p>
+      </pre>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <pre>
+        <p class="info">
+          Some helpful information.
+        </p>
+      </pre>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <pre>
+        <div class="field w-50">
+          <label for="text-input">Label</label>
+          <input type="text" id="text-input" placeholder="Text input">
+        </div>
+      </pre>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <pre>
+        <div class="field w-50">
+          <label for="textarea">Textarea</label>
+          <textarea type="textarea" id="textarea" placeholder="Textarea"></textarea>
+        </div>
+      </pre>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <pre>
+        <div class="field w-50">
+          <label for="select">Select</label>
+          <select id="select">
+            <option value="">Select one...</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+          </select>
+        </div>
+      </pre>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <pre>
+        <label for="inline-form-input">Inline form</label>
+        <form class="form--inline w-50">
+          <input type="email" id="inline-form-input" placeholder="Inline form...">
+          <button type="submit" class="button button--primary">Submit</button>
+        </form>
+      </pre>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <pre>
+        <div class="field">
+          <input type="checkbox" id="checkbox-input">
+          <label for="checkbox-input">Checkbox</label>
+        </div>
+
+        <div class="field">
+          <input type="checkbox" id="checkbox-input-checked" checked="checked">
+          <label for="checkbox-input-checked">Checkbox checked</label>
+        </div>
+      </pre>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <pre>
+        <div class="field">
+          <input type="radio" id="radio-input" name="radio-group">
+          <label for="radio-input">Radio</label>
+        </div>
+
+        <div class="field">
+          <input type="radio" id="radio-input-checked" name="radio-group" checked="checked">
+          <label for="radio-input-checked">Radio checked</label>
+        </div>
+      </pre>
+    </ma-code>
+
+    <ma-code class="mb-3">
+      <pre>
+        <div class="field field--quantity">
+          <a href="javascript:">{% render 'icon-minus' %}</a>
+          <input type="number" value="8">
+          <a href="javascript:">{% render 'icon-plus' %}</a>
+        </div>
+      </pre>
+    </ma-code>
+  </div>
+
+  <hr/>
+
+  <div>
+    <h2>Placeholder Images</h2>
+
+    <ma-code raw-code="{% raw %}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{% endraw %}" class="mb-3">
+      <div class="row mb-3">
+        <div class="col-md-3">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      </div>
+    </ma-code>
+
+    <ma-code raw-code="{% raw %}{{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder-svg--portrait' }}{% endraw %}" class="mb-3">
+      <div class="row mb-3">
+        <div class="col-md-3">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder-svg--portrait' }}
+        </div>
+      </div>
+    </ma-code>
+
+    <ma-code raw-code="{% raw %}{{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder-svg--landscape' }}{% endraw %}" class="mb-3">
+      <div class="row mb-3">
+        <div class="col-md-3">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder-svg--landscape' }}
+        </div>
+      </div>
+    </ma-code>
+  </div>
+
+  <hr/>
+
+  <div>
+    <h2>Slider</h2>
+    <slick :options="{ slidesToShow: 1, arrows: true, dots: true }">
+      <template v-for="i in 3">
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder-svg--wide' }}
+      </template>
+    </slick>
+  </div>
+
+  <hr />
+
+  <div>
+    <h2 class="mt-6 mb-6">Table</h2>
+
+    <table class="responsive-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>SKU</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td colspan="4" class="d-none d-md-table-cell">Subtotal</td>
+          <td data-label="Subtotal">$20.00</td>
+        </tr>
+        <tr>
+          <td colspan="4" class="d-none d-md-table-cell">Tax (GST 10.0%)</td>
+          <td data-label="Tax (GST 10.0%)">$2.00</td>
+        </tr>
+        <tr>
+          <td colspan="4" class="d-none d-md-table-cell">Total</td>
+          <td data-label="Total">$22.00</td>
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr>
+          <td data-label="Product">Sample product title</td>
+          <td data-label="SKU">123456</td>
+          <td data-label="Price">$20.00</td>
+          <td data-label="Quantity">1</td>
+          <td data-label="Total">$20.00</td>
+        </tr>
+        <tr>
+          <td data-label="Product">Sample product title</td>
+          <td data-label="SKU">123456</td>
+          <td data-label="Price">$20.00</td>
+          <td data-label="Quantity">1</td>
+          <td data-label="Total">$20.00</td>
+        </tr>
+        <tr>
+          <td data-label="Product">Sample product title</td>
+          <td data-label="SKU">123456</td>
+          <td data-label="Price">$20.00</td>
+          <td data-label="Quantity">1</td>
+          <td data-label="Total">$20.00</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr/>
+
+  <div>
+    <h2>Pagination</h2>
+    <div class="pagination">
+      <span class="prev"><a href="?page=4" title="">«</a></span>
+      <span class="page"><a href="?page=1" title="">1</a></span>
+      <span class="deco">…</span>
+      <span class="page"><a href="?page=3" title="">3</a></span>
+      <span class="page"><a href="?page=4" title="">4</a></span>
+      <span class="page current">5</span>
+      <span class="page"><a href="?page=6" title="">6</a></span>
+      <span class="page"><a href="?page=7" title="">7</a></span>
+      <span class="deco">…</span>
+      <span class="page"><a href="?page=20" title="">20</a></span>
+      <span class="next"><a href="?page=6" title="">»</a></span>
+    </div>
+  </div>
+</div>

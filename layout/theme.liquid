@@ -1,0 +1,105 @@
+<!doctype html>
+<html class="no-js supports-no-cookies" lang="{{ shop.locale }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if settings.gsc_verification != blank -%}
+    <meta name="google-site-verification" content="{{ settings.gsc_verification }}" />
+  {%- endif -%}
+
+  {% render 'hreflang-tags' %}
+
+  {% comment %}
+    - favicon.png should be at least 192x192 in size
+    - See here for more info - https://www.favicon-generator.org/
+    - manifest.json not included, add if you wish - https://web.dev/add-manifest/
+  {% endcomment %}
+  <link rel="apple-touch-icon" sizes="57x57" href="{{ 'favicon.png' | asset_img_url: '57x57' }}">
+  <link rel="apple-touch-icon" sizes="60x60" href="{{ 'favicon.png' | asset_img_url: '60x60' }}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{{ 'favicon.png' | asset_img_url: '72x72' }}">
+  <link rel="apple-touch-icon" sizes="76x76" href="{{ 'favicon.png' | asset_img_url: '76x76' }}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{{ 'favicon.png' | asset_img_url: '114x114' }}">
+  <link rel="apple-touch-icon" sizes="120x120" href="{{ 'favicon.png' | asset_img_url: '120x120' }}">
+  <link rel="apple-touch-icon" sizes="144x144" href="{{ 'favicon.png' | asset_img_url: '144x144' }}">
+  <link rel="apple-touch-icon" sizes="152x152" href="{{ 'favicon.png' | asset_img_url: '152x152' }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ 'favicon.png' | asset_img_url: '180x180' }}">
+  <link rel="icon" type="image/png" sizes="192x192" href="{{ 'favicon.png' | asset_img_url: '192x192' }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ 'favicon.png' | asset_img_url: '32x32' }}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{{ 'favicon.png' | asset_img_url: '96x96' }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ 'favicon.png' | asset_img_url: '16x16' }}">
+  <meta name="msapplication-TileImage" content="{{ 'favicon.png' | asset_img_url: '144x144' }}">
+
+  {%- if settings.theme_color != blank -%}
+    <meta name="theme-color" content="{{ settings.theme_color }}">
+    <meta name="msapplication-TileColor" content="{{ settings.theme_color }}">
+  {%- endif -%}
+
+  {%- capture seo_title -%}
+    {{ page_title }}
+    {%- if current_tags -%}
+      {%- assign meta_tags = current_tags | join: ', ' -%} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+    {%- endif -%}
+    {%- if current_page != 1 -%}
+      &ndash; {{ 'general.meta.page' | t: page: current_page }}
+    {%- endif -%}
+    {%- assign escaped_page_title = page_title | escape -%}
+    {%- unless escaped_page_title contains shop.name -%}
+      &ndash; {{ shop.name }}
+    {%- endunless -%}
+  {%- endcapture -%}
+  <title>{{ seo_title | strip }}</title>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+
+  <script src="{{ 'lazysizes.js' | asset_url }}" async=""></script>
+
+  {% render 'meta-social-tags' %}
+
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', '');
+
+    window.theme = {
+      strings: {
+        addToCart: {{ 'products.product.add_to_cart' | t | json }},
+        soldOut: {{ 'products.product.sold_out' | t | json }},
+        unavailable: {{ 'products.product.unavailable' | t | json }}
+      },
+      moneyFormat: {{ shop.money_format | json }}
+    };
+  </script>
+
+  {{ content_for_header }}
+</head>
+
+<body id="{{ page_title | handle }}" class="template-{{ template.name | handle }} d-none">
+
+  <a class="in-page-link sr-only skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+  {% section 'announcement-bar' %}
+  <header id="app" v-cloak class="header-wrapper">
+    {% section 'header' %}
+    {% section 'megamenu-1' %}
+    {% section 'megamenu-2' %}
+    {% section 'megamenu-3' %}
+  </header>
+
+  <main id="MainContent">
+    <article {% unless template.name == "index" %}class="container"{% endunless %}>
+      {{ content_for_layout }}
+    </article>
+  </main>
+
+  <footer>
+    {% section 'footer' %}
+  </footer>
+
+  {{ 'theme.js' | asset_url | script_tag }}
+
+</body>
+</html>

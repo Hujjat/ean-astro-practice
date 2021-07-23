@@ -1,0 +1,16 @@
+{% section 'template-collection' %}
+
+<!-- SEO (first page only) -->
+{% paginate collection.products by 48 %}
+<ul class="d-none">
+  {%- for product in collection.products %}
+    <li>
+      <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+      <img src="{{ product | img_url }}" />
+      <span>{{ product.price | money }}</span>
+      <div class="description">{{ product.description }}</div>
+    </li>
+
+  {%- endfor -%}
+</ul>
+{% endpaginate %}

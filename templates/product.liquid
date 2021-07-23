@@ -1,0 +1,87 @@
+{%- comment -%}
+If using Shopify Product Reviews get the aggregateRating
+If not using SPR, or the product has no reviews, the metafield won't exist and this won't be added to the Structured Data
+{%- endcomment -%}
+{% assign productReviewMetafield = product.metafields.spr.reviews %}
+{% if productReviewMetafield != blank %}
+  {% assign splitMarkerValue = 'itemprop="ratingValue" content="' %}
+  {% assign splitMarkerCount = 'itemprop="reviewCount" content="' %}
+  {% assign ratingValue = productReviewMetafield | split:splitMarkerValue | last | split:'"' | first | abs %}
+  {% assign reviewCount = productReviewMetafield | split:splitMarkerCount | last | split:'"' | first  | abs %}
+  {% assign showAggregateRating = true %}
+  {% capture showAggregateRatingJson %}
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "{{ ratingValue }}",
+      "reviewCount": "{{ reviewCount }}"
+    },
+  {% endcapture %}
+{% endif %}
+
+{% section 'template-product' %}
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": "{{ product.title | escape }}",
+  "url": "{{ shop.url }}{{ product.url }}",
+  {% if product.featured_image %}
+    {% assign image_size = product.featured_image.width | append: 'x' %}
+    "image": [
+      "https:{{ product.featured_image.src | img_url: image_size }}"
+    ],
+  {% endif %}
+  "description": "{{ product.description | strip_html| strip_newlines | escape }}",
+  {% if product.selected_or_first_available_variant.id != blank %}
+    "sku": "{{ product.selected_or_first_available_variant.id }}",
+  {% endif %}
+  {% if product.selected_or_first_available_variant.barcode != blank %}
+    "gtin13": "{{ product.selected_or_first_available_variant.barcode }}",
+  {% endif %}
+  "brand": {
+    "@type": "Thing",
+    "name": "{{ product.vendor | escape }}"
+  },
+  {% if showAggregateRating %}
+    {{ showAggregateRatingJson }}
+  {% endif %}
+  {% if product.variants %}
+    "offers": [
+      {% for variant in product.variants %}
+        {
+          "@type" : "Offer",
+          "availability" : "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+          "price" : "{{ variant.price | divided_by: 100.00 }}",
+          "priceCurrency" : "{{ shop.currency }}",
+          "url" : "{{ shop.url }}{{ variant.url }}",
+          "itemOffered" :
+          {
+              "@type" : "Product",
+              {% if variant.image %}
+                {% assign variant_image_size = variant.image.width | append: 'x' %}
+                "image": "http:{{ variant.image.src | img_url: variant_image_size }}",
+              {% endif %}
+              {% if variant.title != blank %}
+                "name" : "{{ variant.title | escape }}",
+              {% endif %}
+              {% if variant.sku != blank %}
+                "sku": "{{ variant.sku }}",
+              {% endif %}
+              {% if variant.weight != blank %}
+                "weight": {
+                  "@type": "QuantitativeValue",
+                  {% if variant.weight_unit != blank %}
+                    "unitCode": "{{ variant.weight_unit }}",
+                  {% endif %}
+                  "value": "{{ variant.weight | weight_with_unit: variant.weight_unit }}"
+                },
+              {% endif %}
+              "url": "{{ shop.url }}{{ variant.url }}"
+          }
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  {% endif %}
+}
+</script>

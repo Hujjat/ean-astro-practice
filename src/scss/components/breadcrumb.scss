@@ -1,0 +1,50 @@
+$breadcrumb-item-padding: .3em;
+
+.breadcrumb {
+  display: flex;
+  padding: $gutter 0;
+  margin-bottom: 0;
+  list-style: none;
+  color: $color-body-text--secondary;
+  font-size: 12px;
+  font-weight: $font-weight-normal;
+  overflow: hidden;
+
+  &__item {
+    white-space: nowrap;
+
+    & + & {
+      padding-left: $breadcrumb-item-padding;
+      display: flex;
+
+      &::before {
+        display: inline-block; // Suppress underlining of the separator in modern browsers
+        padding-right: $breadcrumb-item-padding;
+        content: ">";
+      }
+    }
+
+    a {
+      color: inherit;
+      font-weight: inherit;
+
+      &:hover {
+        @extend a:hover;
+      }
+    }
+
+    // IE9-11 hack to properly handle hyperlink underlines for breadcrumbs built
+    // without `<ul>`s. The `::before` pseudo-element generates an element
+    // *within* the .breadcrumb-item and thereby inherits the `text-decoration`.
+    //
+    // To trick IE into suppressing the underline, we give the pseudo-element an
+    // underline and then immediately remove it.
+    & + &:hover::before {
+      text-decoration: underline;
+    }
+    // stylelint-disable-next-line no-duplicate-selectors
+    & + &:hover::before {
+      text-decoration: none;
+    }
+  }
+}

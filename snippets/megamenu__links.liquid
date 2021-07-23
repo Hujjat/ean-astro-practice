@@ -1,0 +1,49 @@
+<div class="d-flex flex-column flex-lg-row">
+  
+  {% for level1 in linklists[section.settings.menu].links %}
+    <nav class="flex-grow-1">
+      <ul aria-label="{{ section.settings.attach_to }}" class="menu" role="menu">
+        <li class="menu__item" role="none">
+          <a href="{{ level1.url }}" 
+             title="{{ level1.title | escape }}" 
+             v-init-megamenu="'{{ parent_handle }}__{{ level1.handle }}'"
+             class="menu__link {%- if level1.handle contains 'sale' %} menu__link--red {%- endif -%}" 
+             role="menuitem"
+          >
+            <strong>{{ level1.title | escape }}</strong>
+            <span class="menu__arrow" :class="{ 'menu__arrow--active': megamenuToggles['{{ parent_handle }}__{{ level1.handle }}'] }">{% render 'icon-arrow-down' %}</span>
+          </a>
+        </li>
+  
+        {%- if level1.links.size > 0 -%}
+          <transition name="megamenu">
+            <ul class="menu d-lg-block" parent-item="{{ parent_handle }}__{{ level1.handle }}" v-show="megamenuToggles['{{ parent_handle }}__{{ level1.handle }}']" role="menu" aria-label="{{ level1.title }}">
+              {% for level2 in level1.links %}
+                <li class="menu__item" role="none">
+                  <a v-init-megamenu="'{{ parent_handle }}__{{ level1.handle }}__{{ level2.handle }}'" href="{{ level2.url }}" title="{{ level2.title | escape }}" class="menu__link" role="menuitem">
+                    <span>{{ level2.title | escape }}</span>
+                    <span class="menu__arrow" :class="{ 'menu__arrow--active': megamenuToggles['{{ parent_handle }}__{{ level1.handle }}__{{ level2.handle }}'] }">{% render 'icon-arrow-down' %}</span>
+                  </a>
+  
+                  {%- if level2.links.size > 0 -%}
+                    <transition name="megamenu">
+                      <ul aria-label="{{ level2.title }}" class="menu d-lg-block" parent-item="{{ parent_handle }}__{{ level1.handle }}__{{ level2.handle }}" v-show="megamenuToggles['{{ parent_handle }}__{{ level1.handle }}__{{ level2.handle }}']" role="menu">
+                        {% for level3 in level2.links %}
+                          <li role="none" class="menu__item">
+                            <a href="{{ level3.url }}" title="{{ level3.title | escape }}" class="menu__link" role="menuitem">
+                              <span>{{ level3.title | escape }}</span>
+                            </a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </transition>
+                  {%- endif -%}
+                </li>
+              {% endfor %}
+            </ul>
+          </transition>
+        {%- endif -%}
+      </ul>
+    </nav>
+  {% endfor %}
+</div>

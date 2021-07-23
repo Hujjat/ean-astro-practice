@@ -1,0 +1,120 @@
+// Colours
+
+// Bootstrap gray overrides, used for bg-light text-dark etc.
+$gray-100: #EFEFEF;
+$gray-900: #000000;
+
+$color-primary: #00adef;
+$color-secondary: #7C7C7C;
+$color-lightgrey: #dddddd;
+$color-accent: #947F4E;
+
+$color-heading-text: #000000;
+$color-body-text: #333333;
+$color-body-text--secondary: #7C7C7C;
+$background: linear-gradient(to bottom right, #43cea2, #185a9d);
+
+$color-sale: #e01717;
+
+// Helper colors for form error states
+$color-disabled: #C4C4C4;
+$color-disabled-border: #000000;
+$color-error: red;
+$color-error-bg: adjust-color(red, $alpha: -0.8);
+$color-info: orange;
+$color-info-bg: adjust-color(orange, $alpha: -0.8);
+$color-success: green;
+$color-success-bg: adjust-color(green, $alpha: -0.8);
+
+// Typography
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-heading: "Open Sans", $font-family-sans-serif;
+$font-body: "Open Sans", $font-family-sans-serif;
+$font-icons: 'icomoon';
+
+$font-size-body: 16px;
+
+$font-weight-normal: normal;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$letter-spacing: .05em;
+
+
+// Form controls and buttons
+$border-radius: 3px;
+$input-height: 44px;
+$color-active: #000000;
+
+
+// Borders
+$border-color: #666666;
+$theme-border-width: thin; // Fix for disappearing border on zoom out - https://stackoverflow.com/questions/12547580/borders-disappear-in-chrome-when-i-zoom-in
+$border: $theme-border-width solid $border-color;
+$border--feature: 2px solid $border-color;
+
+$border-color--light: #bbbbbb;
+$border--light: $theme-border-width solid $border-color--light;
+
+
+// Shadow
+$shadow:  0 2px 22px 0 rgba(0, 0, 0, 0.13);
+
+
+// Transitions
+$transition-duration: 0.2s;
+$transition-timing: ease-in-out;
+
+$transition: all $transition-duration $transition-timing;
+
+
+// Icons
+$icon-size: 20px;
+
+
+// Placeholders images
+$placeholder-color-foreground: $color-heading-text;
+$placeholder-color-background: $color-lightgrey;
+
+
+// Grid
+$grid-medium: 768px;
+$grid-large: 992px;
+$grid-widescreen: 1920px;
+$grid-max-width: 1400px;
+$grid-max-width--content: 1024px; // Used for text content pages e.g. CMS, t&c, privacy, etc.
+$grid-max-width--absolute: 1920px; // Used for "full width" templates so that content is not overly stretched on ultrawide resolutions
+$gutter: 30px;
+
+// Breakpoints used with the media-query mixin
+$small: 'small';
+$medium: 'medium';
+$medium-down: 'medium-down';
+$medium-up: 'medium-up';
+$large: 'large';
+$large-down: 'large-down';
+$large-up: 'large-up';
+$widescreen: 'widescreen';
+$container-down: 'container-down';
+$container-up: 'container-up';
+
+$breakpoints: (
+  $small '(max-width: #{$grid-medium - 1})',
+  $medium '(min-width: #{$grid-medium}) and (max-width: #{$grid-large - 1})',
+  $medium-down '(max-width: #{$grid-large - 1})',
+  $medium-up '(min-width: #{$grid-medium})',
+  $large '(min-width: #{$grid-large}) and (max-width: #{$grid-widescreen - 1})',
+  $large-down '(max-width: #{$grid-widescreen - 1})',
+  $large-up '(min-width: #{$grid-large})',
+  $widescreen '(min-width: #{$grid-widescreen})',
+  $container-down '(max-width: #{$grid-max-width - 1})',
+  $container-up '(min-width: #{$grid-max-width})'
+);
+
+$z-fixed: 1030;
+$z-header: 1020;
+$z-dropdown: 1000;
+$z-mask: 998;
+
+$header-height: 66px;
+$header-search-height: 70px;

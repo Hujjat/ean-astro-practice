@@ -1,0 +1,54 @@
+@function choose-text-color($color) {  
+  @if (lightness( $color ) > 50) {
+    @return black;
+  }
+  @else {
+    @return white;
+  }
+}
+
+@mixin color-style($color, $style) {
+  &--#{$style} {
+    background-color: $color;
+    color: choose-text-color($color);
+
+    &:before {
+      content: '#{$style}\a#{$color}';
+    }
+  }
+}
+
+.color-style {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  margin-right: 1em;
+  background-color: #eee;
+  text-align: center;
+
+  &:before {
+    display: block;
+    white-space: pre-wrap;
+  }
+
+  &--background {
+    width: 100%;
+    background: $background;
+    color: #fff;
+
+    &:before {
+      content: '$background: #{$background}';
+      font-family: monospace;
+    }
+  }
+  
+  @include color-style($color-primary, 'primary');
+
+  @include color-style($color-secondary, 'secondary');
+
+  @include color-style($color-accent, 'accent');
+
+  @include color-style($color-sale, 'sale');
+}

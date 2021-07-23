@@ -1,0 +1,74 @@
+<div class="gallery">
+  <slick class="gallery__main" ref="main" :options="mainSlickOptions">
+    {% for media in product.media %}
+      {%- case media.media_type -%}
+
+        {%- when 'external_video' -%}
+          <video-wrapper
+            video-type="youtube"
+            video-id="{{ media.external_id }}"
+            aspect-ratio="100%"
+            :is-visible="currentSlide == {{ forloop.index0 }}"
+            :is-autoplay="true"
+            :is-mute="true"
+          ></video-wrapper>
+
+        {%- when 'video' -%}
+          {%- capture sources_data -%}
+            {%- assign video_sources = media.sources | where: "format", "mp4" -%}
+            {%- for video_source in video_sources -%}
+              '{{ video_source.url }}'{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+          <video-wrapper
+            video-type="html"
+            video-id="{{ media.external_id }}"
+            aspect-ratio="100%"
+            :is-visible="currentSlide == {{ forloop.index0 }}"
+            :is-autoplay="true"
+            :is-mute="true"
+            :thumbnail="'{{ media.preview_image | img_url: '1024x' }}'"
+            :sources="[{{ sources_data }}]"
+          ></video-wrapper>
+
+        {%- when 'image' -%}
+          <div class="position-relative">
+            <image-zoom img-normal="{{ media | img_url: '1024x' }}" img-zoom="{{ media | img_url: '2048x' }}"></image-zoom>
+            <div class="gallery__zoom d-none d-lg-block">
+              {%- render 'icon-zoom' -%}
+            </div>
+          </div>
+      {%- endcase -%}
+
+    {%- else -%}
+      <div>
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {% endfor %}
+  </slick>
+
+  <slick class="gallery__nav" ref="nav" :options="navSlickOptions">
+    {% for media in product.media %}
+      {%- case media.media_type -%}
+
+        {%- when 'external_video' -%}
+          <div class="video-thumbnail">
+            <img src="{{ media.external_id | prepend: '//img.youtube.com/vi/' | append: '/0.jpg' }}" alt="{{ media.alt | escape }}">
+          </div>
+
+        {%- when 'video' -%}
+          <div class="video-thumbnail">
+            <img src="{{ media.preview_image | img_url: '200x' }}" alt="{{ media.alt | escape }}">
+          </div>
+
+        {%- when 'image' -%}
+          <img src="{{ media.src | img_url: '200x' }}" alt="{{ media.alt | escape }}">
+      {%- endcase -%}
+
+    {%- else -%}
+      <div>
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {% endfor %}
+  </slick>
+</div>

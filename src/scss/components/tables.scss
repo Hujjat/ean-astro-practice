@@ -1,0 +1,93 @@
+table {
+  width: 100%;
+
+  th, td {
+    padding: ($gutter / 4) 0;
+
+    @include media-query($medium-up) {
+      padding: ($gutter / 2) ($gutter / 4);
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+
+  th {
+    @extend .h5;
+
+    @include media-query($medium-up) {
+      border-bottom: $border;
+    }
+  }
+
+  @include media-query($medium-up) {
+    td {
+      // font-size: em(10px);
+      border-bottom: $border--light;
+    }
+  }
+}
+
+@include media-query($small) {
+  .responsive-table {
+    width: 100%;
+
+    thead {
+      display: none;
+    }
+
+    tr {
+      display: block;
+      margin-bottom: $gutter / 4;
+      padding-bottom: $gutter / 4;
+      border-bottom: $border;
+    }
+
+    // IE9 table layout fixes
+    tr,
+    td {
+      float: left;
+      clear: both;
+      width: 100%;
+    }
+
+    th,
+    td {
+      display: block;
+      margin: 0;
+      text-align: right;
+    }
+
+    td::before {
+      content: attr(data-label);
+      float: left;
+      padding-right: $gutter / 4;
+      text-align: center;
+      font-weight: $font-weight-semibold;
+      text-transform: uppercase;
+    }
+  }
+
+  // Add a keyline between rows
+  .responsive-table-row + .responsive-table-row,
+  tfoot > .responsive-table-row:first-child {
+    position: relative;
+    margin-top: $gutter / 4;
+    padding-top: $gutter / 4;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      display: block;
+      border-bottom: $border--light;
+    }
+  }
+}

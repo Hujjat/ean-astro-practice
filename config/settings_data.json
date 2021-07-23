@@ -1,0 +1,58 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "social_facebook_link": "#",
+      "social_instagram_link": "#",
+      "sections": {
+        "home-hero-slider": {
+          "type": "home-hero-slider",
+          "blocks": {
+            "home-hero-slider-0": {
+              "type": "slide",
+              "settings": {
+              }
+            },
+            "home-hero-slider-1": {
+              "type": "slide",
+              "settings": {
+              }
+            },
+            "home-hero-slider-2": {
+              "type": "slide",
+              "settings": {
+              }
+            }
+          },
+          "block_order": [
+            "home-hero-slider-0",
+            "home-hero-slider-1",
+            "home-hero-slider-2"
+          ],
+          "settings": {
+          }
+        },
+        "footer": {
+          "type": "footer",
+          "blocks": {
+            "1588819359040": {
+              "type": "link_list",
+              "settings": {
+                "menu": "footer"
+              }
+            }
+          },
+          "block_order": [
+            "1588819359040"
+          ],
+          "settings": {
+            "copyright": "MindArc. All rights reserved."
+          }
+        }
+      },
+      "content_for_index": [
+        "home-hero-slider"
+      ]
+    }
+  }
+}

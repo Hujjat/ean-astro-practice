@@ -1,0 +1,10 @@
+.product {
+  &__title {
+    @extend .h2;
+    text-transform: none;
+  }
+
+  &__price {
+    @extend .h4;
+  }
+}

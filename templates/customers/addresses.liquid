@@ -1,0 +1,108 @@
+
+<div vue-init v-cloak>
+  <h1>{{ 'customer.addresses.title' | t }}</h1>
+
+  <customer-addresses inline-template>
+    <div class="row">
+      <aside class="col-md-3 mb-3">
+        <button @click="toggleNewAddressForm()" type="button" class="button button--primary w-auto mb-2">{{ 'customer.addresses.add_new' | t }}</button>
+        <div>
+          <a href="{{ routes.account_url }}" class="link">{{ 'customer.account.return' | t }}</a>
+        </div>
+      </aside>
+
+      <section class="col-md-9">
+        <div class="row">
+          <div class="col-md-8 col-xl-6">
+            <div v-show="isNewAddressFormShown" class="mb-3">
+              {% form 'customer_address', customer.new_address %}
+                <h2>{{ 'customer.addresses.add_new' | t }}</h2>
+
+                <div ref="newAddress" class="address-form">
+                  {% render 'addresses__form-fields', form_id: 'new', form: form, default_country_code: 'AU' %}
+                </div>
+
+                <div class="field field--checkbox">
+                  {{ form.set_as_default_checkbox }}
+                  <label for="address_default_address_new">
+                    {{ 'customer.addresses.set_default' | t }}
+                  </label>
+                </div>
+
+                <div clas="d-flex">
+                  <button type="submit" class="button button--primary w-auto mr-2">{{ 'customer.addresses.add' | t }}</button>
+                  <button @click="toggleNewAddressForm()" type="button" class="button button--secondary w-auto">{{ 'customer.addresses.cancel' | t }}</button>
+                </div>
+              {% endform %}
+            </div>
+          </div>
+        </div>
+
+        <div v-show="!isNewAddressFormShown">
+          <div class="row">
+            <div class="col-md-8 col-xl-6">
+              {% paginate customer.addresses by 5 %}
+
+                {% for address in customer.addresses %}
+
+                  <div class="mb-3">
+                    <input ref="addressCount" type="hidden" value="{{forloop.length}}">
+
+                    {% if address == customer.default_address %}
+                      <div><strong>{{ 'customer.addresses.primary_address' | t }}</strong></div>
+                    {% endif %}
+                    {{ address | format_address }}
+
+                    <div class="d-flex">
+                      <button @click="toggleAddressForm({{ forloop.index0 }})" type="button" class="button button--primary w-auto mr-2">
+                        {{ 'customer.addresses.edit' | t }}
+                      </button>
+                      <form @submit="deleteAddress" method="post" action="/account/addresses/{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button type="submit" class="button button--secondary w-auto">
+                          {{ 'customer.addresses.delete' | t }}
+                        </button>
+                      </form>
+                    </div>
+
+                    <collapse-transition>
+                      <div v-show="addressToggles[{{ forloop.index0 }}]" class="mt-2">
+                        {% form 'customer_address', address %}
+                          <div class="h5">{{ 'customer.addresses.edit_address' | t }}</div>
+
+                          <div ref="address{{ forloop.index0 }}" class="address-form">
+                            {% render 'addresses__form-fields', form_id: form.id, form: form, address: address %}
+                          </div>
+
+                          <div class="field field--checkbox">
+                            {{ form.set_as_default_checkbox }}
+                            <label for="address_default_address_{{ form.id }}">
+                              {{ 'customer.addresses.set_default' | t }}
+                            </label>
+                          </div>
+
+                          <div class="d-flex">
+                            <button type="submit" class="button button--primary w-auto mr-2">{{ 'customer.addresses.update' | t }}</button>
+                            <button @click="toggleAddressForm({{ forloop.index0 }})" type="button" class="button button--secondary w-auto" data-form-id="{{ form.id }}">
+                              {{ 'customer.addresses.cancel' | t }}
+                            </button>
+                          </div>
+
+                        {% endform %}
+                      </div>
+                    </collapse-transition>
+                  </div>
+                {% endfor %}
+
+                {% if paginate.pages > 1 %}
+                  {% render 'pagination', paginate: paginate, classes: 'justify-content-start mt-5 mx-n2' %}
+                {% endif %}
+
+              {% endpaginate %}
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </customer-addresses>
+</div>

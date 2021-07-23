@@ -1,0 +1,28 @@
+.minicart {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100%;
+  max-width: 320px;
+  max-height: 100vh;
+  padding: $gutter / 2;
+  background: #ffffff;
+  box-shadow: 0 15px 36px 0 rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+  z-index: $z-dropdown;
+
+  @include media-query($container-up) {
+    right: calc((100vw - #{$grid-max-width}) / 2);
+  }
+
+  @include media-query($small) {
+    max-width: unset;
+    max-height: 80vh;
+    padding-top: $gutter;
+  }
+
+  &__item {
+    position: relative;
+    line-height: normal;
+  }
+}

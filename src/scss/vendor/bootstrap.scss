@@ -1,0 +1,78 @@
+// stylelint-disable-next-line scss/dollar-variable-default
+
+// Default values found here:
+// https://github.com/twbs/bootstrap/blob/main/scss/_variables.scss
+
+$spacer: $gutter / 2;
+
+$spacers: (
+  0: 0,
+  1: ($spacer * .25),
+  2: ($spacer * .5),
+  3: $spacer,
+  4: ($spacer * 1.5),
+  5: ($spacer * 2),
+  6: ($spacer * 3),
+  7: ($spacer * 4),
+  8: ($spacer * 5),
+  9: ($spacer * 6),
+  10: ($spacer * 7),
+  11: ($spacer * 8),
+  12: ($spacer * 9)
+);
+
+$grid-gutter-width: $spacer * 2;
+
+$container-max-widths: (
+  xs: $grid-max-width
+);
+
+$primary:       $color-primary;
+$secondary:     $color-secondary;
+$success:       $color-success;
+$info:          $color-info;
+$warning:       $color-info;
+$danger:        $color-error;
+
+$breadcrumb-padding-x:              0;
+$breadcrumb-bg:                     transparent;
+$breadcrumb-divider-color:          $color-body-text;
+$breadcrumb-active-color:           $color-body-text;
+
+ @import "~bootstrap/scss/functions";
+ @import "~bootstrap/scss/variables";
+ @import "~bootstrap/scss/mixins";
+ @import "~bootstrap/scss/root";
+ @import "~bootstrap/scss/reboot";
+//  @import "~bootstrap/scss/type";
+//  @import "~bootstrap/scss/images";
+//  @import "~bootstrap/scss/code";
+ @import "~bootstrap/scss/grid";
+//  @import "~bootstrap/scss/tables";
+//  @import "~bootstrap/scss/forms";
+//  @import "~bootstrap/scss/buttons";
+//  @import "~bootstrap/scss/transitions";
+//  @import "~bootstrap/scss/dropdown";
+//  @import "~bootstrap/scss/button-group";
+//  @import "~bootstrap/scss/input-group";
+//  @import "~bootstrap/scss/custom-forms";
+//  @import "~bootstrap/scss/nav";
+//  @import "~bootstrap/scss/navbar";
+//  @import "~bootstrap/scss/card";
+//  @import "~bootstrap/scss/breadcrumb";
+//  @import "~bootstrap/scss/pagination";
+//  @import "~bootstrap/scss/badge";
+//  @import "~bootstrap/scss/jumbotron";
+//  @import "~bootstrap/scss/alert";
+//  @import "~bootstrap/scss/progress";
+//  @import "~bootstrap/scss/media";
+//  @import "~bootstrap/scss/list-group";
+//  @import "~bootstrap/scss/close";
+//  @import "~bootstrap/scss/toasts";
+//  @import "~bootstrap/scss/modal";
+//  @import "~bootstrap/scss/tooltip";
+//  @import "~bootstrap/scss/popover";
+//  @import "~bootstrap/scss/carousel";
+//  @import "~bootstrap/scss/spinners";
+ @import "~bootstrap/scss/utilities";
+ @import "~bootstrap/scss/print";

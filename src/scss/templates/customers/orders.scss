@@ -1,0 +1,9 @@
+.order-table {
+  tbody, tfoot {
+    @include media-query($medium-up) {
+      tr:last-child td {
+        border-bottom: $border--feature;
+      }
+    }
+  }
+}

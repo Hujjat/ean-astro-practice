@@ -1,0 +1,9 @@
+.price {
+  &--old {
+    color: $color-secondary;
+  }
+
+  &--sale {
+    color: $color-sale;
+  }
+}

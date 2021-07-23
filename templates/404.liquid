@@ -1,0 +1,19 @@
+<section class="row justify-content-center">
+  <div class="col-md-6">
+    <h2 class="mb-3">{{ 'general.404.title' | t }}</h2>
+    
+    <p>{{ 'general.404.subtext' | t }}</p>
+    <p class="mb-3">{{ 'general.404.continue_shopping_html' | t }}</p>
+
+    <form class="form" action="/search" method="get" role="search">
+      <input type="hidden" name="type" value="product" />
+      <div class="field">
+        <label>{{ 'general.search.label' | t }}</label>
+        <input type="search" name="q" placeholder="{{ 'general.search.placeholder' | t }}">
+      </div>
+      <div class="actions">
+        <button type="submut" class="button button--primary">{{ 'general.search.submit' | t }}</button>
+      </div>
+    </form>
+  </div>
+</section>

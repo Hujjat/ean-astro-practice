@@ -1,0 +1,38 @@
+{% comment %}
+This page represents the /collections and /products pages.
+
+Rendering the PLP instead of collections since this page is usually overlooked.
+Uncomment the below if required, and remove PLP reference.
+{% endcomment %}
+
+{% section 'template-collection' %}
+
+{% comment %}
+<h1>{{ page_title }}</h1>
+
+<section class="row">
+  {% for collection in collections %}
+    {% unless collection.handle == 'homepage' %}
+      <div class="col-md-4 text-center mb-5">
+        <div class="mb-3">
+          <a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: title }}">
+            {% if collection.image != blank or collection.products.first.featured_image != blank %}
+              {%- assign image_object = collection.image | default: collection.products.first.featured_image -%}
+              <img class="lazyload" data-src="{{ image_object | img_url: '1024x1024' }}" alt="{{ collection.title }}">
+            {% else %}
+              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+              {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </a>
+        </div>
+
+        <div>
+          <a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: title }}" class="h4">
+            {{ collection.title }}
+          </a>
+        </div>
+      </div>
+    {% endunless %}
+  {% endfor %}
+</section>
+{% endcomment %}

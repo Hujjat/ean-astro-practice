@@ -1,0 +1,28 @@
+// Custom fonts
+// ---
+// Keep font-family names the same and utilise font-weight and font-style to style.
+//
+// Using @font-face - https://css-tricks.com/snippets/css/using-font-face/
+//
+// When using Google fonts, either:
+// - Use <link> tag (recommended)
+// - Download files and include using @font-face
+// See here for more info - https://stackoverflow.com/questions/12316501/including-google-web-fonts-link-or-import/12380004
+//
+// Example:
+// @font-face {
+//     font-family: "Gotham";
+//     src: local("☺"), url("../fonts/gotham-book-webfont.woff2") format("woff2"), url("../fonts/gotham-book-webfont.woff") format("woff"), url("../fonts/gotham-book-webfont.ttf") format("truetype");
+//     font-weight: normal;
+//     font-style: normal;
+// }
+//
+// @font-face {
+//     font-family: "Gotham";
+//     src: local("Gotham-Medium"), url("../fonts/GothamSSm-Medium_Web.woff2") format("woff2"), url("../fonts/GothamSSm-Medium_Web.woff") format("woff");
+//     font-weight: 500;
+//     font-style: normal;
+// }
+
+// Remove this, see above
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700");

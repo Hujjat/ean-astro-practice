@@ -1,0 +1,27 @@
+[class*="--error"] {
+  color: $color-error;
+}
+
+.errors,
+.form-success,
+.info {
+  margin-top: $gutter;
+  margin-bottom: $gutter;
+  padding: $gutter / 4;
+  text-align: center;
+}
+
+.errors {
+  color: $color-error;
+  background: $color-error-bg;
+}
+
+.form-success {
+  color: $color-success;
+  background: $color-success-bg;
+}
+
+.info {
+  color: $color-info;
+  background: $color-info-bg;
+}

@@ -1,0 +1,149 @@
+{% render 'breadcrumbs' %}
+
+<section vue-init v-cloak>
+  <product inline-template product-handle="{{ product.handle }}" :is-product-page="true">
+    <div class="row">
+      <div class="col-md-7">
+        {%- if product.type == "Gift Card" -%}
+          {%- for media in product.media limit: 1 -%}
+            <img class="lazyload" data-src="{{ media | img_url: '1024x1024' }}" alt="{{ media.alt | escape }}">
+          {%- endfor -%}
+        {%- else -%}
+          {% render 'product__gallery' %}
+        {%- endif -%}
+      </div>
+
+      <div class="col-md-5">
+        <span v-if="isSale" class="product-badge product-badge--sale">
+          {{ 'products.product.on_sale' | t }}
+        </span>
+
+        <h1 class="product__title">{{ product.title }}</h1>
+        <div class="product__price mb-3" v-if="currentVariant || product">
+
+          <span v-if="currentVariant">
+            <span class="price" :class="{ 'price--sale': isSale }">${ currentVariant.price | currencyFromCents }</span>
+            <s v-if="isSale" class="price price--old">
+              ${ currentVariant.compare_at_price | currencyFromCents }
+            </s>
+          </span>
+
+          <span v-else>
+            <span v-if="product.price_min != product.price_max">${ product.price_min | currencyFromCents } - ${ product.price_max | currencyFromCents }</span>
+            <span v-else>
+              <span class="price" :class="{ 'price--sale': isSale }">${ product.price | currencyFromCents }</span>
+              <s v-if="product.compare_at_price_max > product.price" class="price price--old">
+                ${ product.compare_at_price_max | currencyFromCents }
+              </s>
+            </span>
+          </span>
+        </div>
+
+        {% if product.description != blank %}
+          <read-more class="rte mb-4" :less-height="100">
+            {{ product.description }}
+          </read-more>
+        {% endif %}
+
+        <form @submit.prevent="handleAddToCart" class="mb-4">
+          <input name="id" :value="currentVariant ? currentVariant.id : {{ product.variants.first.id }}" type="hidden">
+
+          {% unless product.has_only_default_variant %}
+            <div v-if="product">
+              <div class="field option" v-for="(option, index) in product.options">
+                <label :for="'option' + option.position">
+                  ${ option.name }
+                </label>
+
+                <select
+                  :id="'option' + option.position"
+                  :name="'options[' + option.name + ']'"
+                  v-model="options[index]"
+                  @change="updateVariant">
+                  <option value="">Select ${ option.name }...</option>
+                  <option v-for="value in option.values" :value="value">${ value }</option>
+                </select>
+              </div>
+            </div>
+          {% endunless %}
+
+          <div>
+            <label class="label">{{ 'products.product.quantity'| t }}</label>
+            <div class="field field--quantity">
+              <a href="javascript:" @click="quantity = quantity > 1 ? quantity - 1 : 0">{% render 'icon-minus' %}</a>
+              <input v-model="quantity" @change="updateQuantity(quantity)" type="number">
+              <a href="javascript:" @click="quantity++">{% render 'icon-plus' %}</a>
+            </div>
+          </div>
+
+          <button-spinner :is-loading="isSubmitting" class="button button--primary w-100 mt-3" :disabled="!currentVariant || !currentVariant.available">
+            <span v-if="!currentVariant || currentVariant.available">{{ 'products.product.add_to_cart' | t }}</span>
+            <span v-else>{{ 'products.product.sold_out' | t }}</span>
+          </button-spinner>
+        </form>
+
+        <accordion class="mb-4">
+          {% if product.description != blank %}
+            <collapsible>
+              <template v-slot:title>Accordion 1</template>
+              <template>{{ product.description }}</template>
+            </collapsible>
+            <collapsible>
+              <template v-slot:title>Accordion 2</template>
+              <template>{{ product.description }}</template>
+            </collapsible>
+          {% endif %}
+
+          {% comment %}
+          Product metafields
+          ---
+          To appear in the product page detail accordion, the product metafield(s) need to be in the "information" namespace.
+          The metafield key should be in the format "<display order>|<title>". Display order is for sort purposes,
+          if not provided, will fallback to display the entire key value.
+          {% endcomment %}
+          {% assign information = product.metafields.information %}
+
+          {%- for field in information -%}
+            {%- assign split = field | first | split: "|"  -%}
+            {%- if split[1] -%}
+              {%- assign title = split[1] -%}
+            {%- else -%}
+              {%- assign title = field | first -%}
+            {%- endif -%}
+
+            <collapsible>
+              <template v-slot:title>{{ title | strip }}</template>
+              <template>{{ field | last | newline_to_br }}</template>
+            </collapsible>
+          {%- endfor -%}
+        </accordion>
+      </div>
+    </div>
+  </product>
+</section>
+
+<section vue-init v-cloak>
+  <product-related inline-template product-id="{{ product.id }}">
+    <div v-if="!isLoading && (recommendedProducts.length || recentlyViewedProducts.length)" class="mt-7">
+      <div class="container">
+        <tabs nav-classes="mb-5">
+          <tab v-if="recommendedProducts.length" title="{{ 'products.product.related_products' | t }}">
+            <slick :options="slickOptions" class="slick-slider--products">
+                <product-item inline-template v-for="product in recommendedProducts" :key="product.id" :product="product">
+                  {% render 'product-item' %}
+                </product-item>
+            </slick>
+          </tab>
+
+          <tab v-if="recentlyViewedProducts.length" title="{{ 'products.product.recently_viewed' | t }}">
+            <slick :options="slickOptions" class="slick-slider--products">
+              <product-item inline-template v-for="product in recentlyViewedProducts" :key="product.id" :product="product">
+                {% render 'product-item' %}
+              </product-item>
+            </slick>
+          </tab>
+        </tabs>
+      </div>
+    </div>
+  </product-related>
+</section>

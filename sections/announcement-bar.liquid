@@ -1,0 +1,72 @@
+{%- if section.settings.announcement_bar_enabled -%}
+  {%- if section.settings.announcement_bar_home_page_only == false or template.name == 'index' and section.blocks.size > 0 -%}
+    <div vue-init class="announcement-bar bg-light text-center py-1">
+      <slick :options="{
+        slidesToShow: 1,
+        arrows: false,
+        dots: false,
+        vertical: true,
+        autoplay: {{ section.settings.is_auto_scroll }},
+        autoplaySpeed: {{ section.settings.announcement_autoplay_speed | times: 1000 }}
+      }">
+        {%- for block in section.blocks -%}
+          <div class="rte">
+            {{ block.settings.message | strip_newlines }}
+          </div>
+        {%- endfor -%}
+      </slick>
+    </div>
+  {%- endif -%}
+{%- endif -%}
+
+
+
+{% schema %}
+  {
+    "name": "Announcement bar",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "announcement_bar_enabled",
+        "label": "Show announcement",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "announcement_bar_home_page_only",
+        "label": "Show on home page only",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "is_auto_scroll",
+        "label": "Auto scroll?",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "announcement_autoplay_speed",
+        "label": "Scrolling speed",
+        "default": 4,
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "unit": "s"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "announcement",
+        "name": "Announcement",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "message",
+            "label": "Announcement",
+            "default": "<p>Announce something here</p>"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

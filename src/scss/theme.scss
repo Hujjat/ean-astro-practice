@@ -1,0 +1,75 @@
+@charset 'UTF-8';
+
+/**
+ * MindArc Astro
+ */
+
+ // Abstracts
+@import './abstracts/mixins';
+@import './abstracts/functions';
+@import './abstracts/fonts';
+@import './abstracts/variables';
+
+// Vendors
+@import './vendor/icomoon';
+@import './vendor/slick';
+@import './vendor/bootstrap';
+
+
+// Base
+@import './base/reset';
+@import './base/development';
+@import './base/styleguide';
+@import './base/animations';
+@import './base/helpers';
+@import './base/layout';
+@import './base/typography';
+
+
+// Components
+@import './components/lists';
+@import './components/media';
+@import './components/tables';
+@import './components/rte';
+@import './components/forms';
+@import './components/buttons';
+@import './components/messages';
+@import './components/icons';
+@import './components/placeholders';
+@import './components/mask';
+@import './components/modal';
+@import './components/prices';
+@import './components/newsletter';
+@import './components/minicart';
+@import './components/product-item';
+@import './components/header-search';
+@import './components/breadcrumb';
+@import './components/blog-item';
+@import './components/pagination';
+@import './components/collapsible';
+@import './components/tabs';
+
+
+// Sections
+@import './sections/announcement-bar';
+@import './sections/header';
+@import './sections/footer';
+@import './sections/navigation';
+@import './sections/hero-slider';
+
+
+// Templates
+@import './templates/customers/login';
+@import './templates/customers/account';
+@import './templates/customers/addresses';
+@import './templates/customers/orders';
+@import './templates/collections/collection';
+@import './templates/collections/filters';
+@import './templates/products/related_products';
+@import './templates/products/gallery';
+@import './templates/products/product';
+@import './templates/index';
+@import './templates/gift_card';
+@import './templates/cart';
+@import './templates/cms';
+@import './templates/blog';

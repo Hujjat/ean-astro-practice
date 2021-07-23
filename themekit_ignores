@@ -1,0 +1,6 @@
+# $PROJECT_DIR/themekit_ignores
+# plain file names
+config/settings_data.json
+assets/algolia_config.js.liquid
+*.gif
+*.jpg

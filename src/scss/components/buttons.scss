@@ -1,0 +1,93 @@
+button {
+  transition: $transition;
+  letter-spacing: inherit;
+}
+
+.button {
+  $self: &;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: $input-height;
+  padding: ($gutter / 4) ($gutter / 2);
+  background: transparent;
+  color: $color-primary;
+  border: thin solid $color-primary;
+  border-radius: $border-radius;
+  font-size: 14px;
+  font-weight: $font-weight-bold;
+  letter-spacing: 3px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: $transition;
+
+  &:focus,
+  &:hover {
+    background: $color-primary;
+    color: #ffffff;
+  }
+
+  &--dark {
+    color: #fff;
+    border-color: #fff;
+
+    &:focus,
+    &:hover {
+      border-color: $color-primary;
+    }
+  }
+
+  &--primary {
+    background: $color-primary;
+    color: #ffffff;
+
+    &:focus,
+    &:hover {
+      background: #fff;
+      color: $color-primary;
+    }
+
+    &#{ $self }--dark {
+      border-color: $color-primary;
+
+      &:focus,
+      &:hover {
+        border-color: #fff;
+      }
+    }
+  }
+
+  &--secondary {
+    background: transparent;
+    color: $color-primary;
+
+    &:focus,
+    &:hover {
+      background: $color-primary;
+      color: #ffffff;
+    }
+
+    &#{ $self }--dark {
+      color: #fff;
+      border-color: #fff;
+
+      &:focus,
+      &:hover {
+        background: transparent;
+        color: $color-primary;
+        border-color: $color-primary;
+      }
+    }
+  }
+
+  &:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+}
+
+.shopify-challenge__button {
+  @extend .button;
+  @extend .button--primary;
+}

@@ -1,0 +1,84 @@
+<section vue-init v-cloak class="hero-slider container container--image">
+  {%- if section.blocks.size > 0 -%}
+    <slick :options="{
+      slidesToShow: 1,
+      arrows: true,
+      dots: true,
+      responsive: [{
+          breakpoint: 768,
+          settings: {
+              arrows: false,
+              dots: true
+          }
+      }]
+    }">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'slide' -%}
+
+          {%- capture content -%}
+            {%- if block.settings.image != blank -%}
+              <img data-lazy="{{ block.settings.image | img_url: '1920x' }}" alt="{{ block.settings.title | escape }}" class="{%- if block.settings.mobile_image != blank %} d-none d-md-block{% endif %}">
+              {%- if block.settings.mobile_image != blank -%}
+                <img data-lazy="{{ block.settings.mobile_image | img_url: '1024x1024' }}" alt="{{ block.settings.title | escape }}" class="d-md-none">
+              {%- endif -%}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder-svg--wide' }}
+            {%- endif -%}
+          {%- endcapture -%}
+
+          <div>
+            {%- if block.settings.url != blank -%}
+              <a href="{{ block.settings.url }}" title="{{ block.settings.title }}">
+                {{ content }}
+              </a>
+            {%- else -%}
+              {{ content }}
+            {%- endif -%}
+          </div>
+
+        {%- endif -%}
+      {%- endfor -%}
+    </slick>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Hero Slider",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "mobile_image",
+            "label": "Mobile Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Slider",
+      "category": "Images"
+    }
+  ]
+}
+{% endschema %}

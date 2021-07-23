@@ -1,0 +1,25 @@
+.tabs {
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__link {
+    @extend .h4;
+    position: relative;
+    display: inline-block;
+    margin: 0 $gutter / 2;
+    padding: $gutter / 2 $gutter;
+    line-height: inherit;
+    text-align: center;
+
+    @include media-query($small) {
+      padding: $gutter / 4 $gutter / 2;
+    }
+
+    &--active {
+      color: $color-primary;
+    }
+  }
+}

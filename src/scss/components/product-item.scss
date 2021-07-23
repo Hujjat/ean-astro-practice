@@ -1,0 +1,31 @@
+.product-item {
+  margin-bottom: $gutter;
+  
+  &__image {
+    position: relative;
+    display: block;
+    margin-bottom: $gutter / 2;
+
+    .product-badge {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  &__title {
+    display: block;
+    margin-bottom: $gutter / 4;
+  }
+}
+
+.product-badge {
+  display: inline-block;
+  padding: ($gutter / 12) ($gutter / 6);
+  background: $color-primary;
+  color: #ffffff;
+
+  &--sale {
+    background: $color-sale;
+  }
+}

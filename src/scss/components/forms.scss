@@ -1,0 +1,211 @@
+$checkbox-size: 16px;
+$radio-check-size: 10px;
+$quantity-size: 30px;
+
+*, button {
+  &:focus {
+    outline: none;
+  }
+}
+
+label {
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+input:not([type="submit"]),
+textarea,
+select {
+  width: 100%;
+  min-height: $input-height;
+  padding: ($gutter / 6) ($gutter / 2);
+  border: $border--light;
+  border-radius: $border-radius;
+  color: $color-body-text;
+  background-color: #ffffff;
+  font-size: $font-size-body;
+  letter-spacing: $letter-spacing;
+
+  &:focus {
+    border-color: $color-active;
+  }
+
+  &.is-invalid {
+    border-color: $color-error;
+  }
+}
+
+// Use this to encode your SVG icon - https://yoksel.github.io/url-encoder/
+// Hint: You can download SVG versions of FontAwesome icons
+select {
+  background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='caret-down' class='svg-inline--fa fa-caret-down fa-w-10' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'%3E%3Cpath fill='currentColor' d='M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1em top 50%;
+  background-size: .9em auto;
+  padding-right: 2.9em !important;
+
+  &::-ms-expand {
+    display: none;
+  }
+}
+
+input[type="radio"], input[type="checkbox"] {
+  position: relative;
+  appearance: none;
+  width: $checkbox-size;
+  height: $checkbox-size;
+  min-height: unset;
+  border: none;
+  margin: 0 ($gutter / 4) 0 0;
+  padding: 0;
+  font-size: $checkbox-size;
+  line-height: 1;
+  vertical-align: middle;
+
+
+  &:before {
+    content: '';
+    display: inline-block;
+    width: $checkbox-size;
+    height: $checkbox-size;
+    border: $border;
+    border-radius: $border-radius;
+  }
+
+  &:checked:after {
+    content: '';
+    position: absolute;
+    top: 0.3em;
+    left: 0.2em;
+    width: 0.7em;
+    height: 0.28em;
+    border-left: thin solid currentColor;
+    border-bottom: thin solid currentColor;
+    transform: rotate(-45deg);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  + label {
+    display: inline-flex;
+    margin: 0;
+    font-weight: $font-weight-normal;
+    line-height: initial;
+    text-transform: none;
+    vertical-align: middle;
+  }
+}
+
+input[type="radio"] {
+  &:before, &:after {
+    border-radius: 360px;
+  }
+
+  &:checked:after {
+    content: '';
+    position: absolute;
+    top: ($checkbox-size - $radio-check-size) / 2;
+    left: ($checkbox-size - $radio-check-size) / 2;
+    width: $radio-check-size;
+    height: $radio-check-size;
+    background: currentColor;
+  }
+}
+
+.field {
+  margin-bottom: $gutter / 2;
+
+  &--checkbox,
+  &--radio {
+    input {
+      min-height: unset;
+      padding: 0;
+    }
+
+    label {
+      white-space: initial;
+      line-height: 1.4;
+    }
+  }
+
+  &--quantity {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100px;
+    border: $border;
+    border-radius: $border-radius;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: $input-height - 1;
+      height: $input-height - 1;
+    }
+
+    input[type=number] {
+      width: calc(100% - #{$quantity-size * 2});
+      min-height: unset;
+      height: 100%;
+      padding: 0;
+      border: none;
+      color: currentColor;
+      text-align: center;
+      font-size: inherit;
+
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+  }
+
+  &__message {
+    margin-top: -($gutter / 6);
+    margin-bottom: $gutter / 3;
+  }
+
+  + .button {
+    margin-top: $gutter / 2;
+  }
+}
+
+::placeholder {
+  color: $color-body-text;
+}
+
+.form--inline {
+  display: flex;
+
+  input {
+    flex-grow: 1;
+    margin-bottom: 0;
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    line-height: 1;
+  }
+
+  button {
+    min-width: unset;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+.errors {
+  color: $color-error;
+
+  ul, li {
+    list-style: none;
+  }
+}

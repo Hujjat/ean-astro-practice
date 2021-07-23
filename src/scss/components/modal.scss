@@ -1,0 +1,50 @@
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-fixed;
+  transition: all .3s ease;
+
+  &__container {
+    position: relative;
+    background: #ffffff;
+    width: 100%;
+    max-width: 60vw;
+    padding: $gutter / 2;
+    z-index: $z-dropdown;
+  }
+
+  &__heading {
+    text-align: left;
+  }
+}
+
+.close {
+  position: absolute;
+  padding: $gutter / 2;
+  top: 0;
+  right: 0;
+}
+
+.modal {
+  &-enter-active, &-leave-active {
+  transition: all $transition-duration $transition-timing;
+
+    .modal__container {
+      transition: all $transition-duration $transition-timing;
+    }
+  }
+
+  &-enter, &-leave-to {
+    opacity: 0;
+
+    .modal__container {
+      transform: translateY(-10px);
+    }
+  }
+}

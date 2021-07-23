@@ -1,0 +1,53 @@
+.mask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: $z-mask;
+
+  &--dark {
+    background: rgba(0,0,0,0.4);
+  }
+
+  &--loading {
+    position: absolute;
+    background: rgba(255,255,255,0.5);
+    color: $color-heading-text;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+}
+
+$spinner-size: 20px;
+$spinner-margin-left: 10px;
+
+.spinner {
+  position: relative;
+  left: -(($spinner-margin-left + $spinner-size) / 2);
+  padding-left: ($spinner-margin-left + $spinner-size) / 2;
+  padding-right: ($spinner-margin-left + $spinner-size) / 2;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: $spinner-size;
+    height: $spinner-size;
+    margin-top: -($spinner-size / 2);
+    margin-left: $spinner-margin-left;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    border-top-color: currentColor;
+    box-sizing: border-box;
+    animation: spinner .6s linear infinite;
+  }
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}

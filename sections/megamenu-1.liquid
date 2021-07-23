@@ -1,0 +1,73 @@
+{% assign parent_handle = section.settings.attach_to | handleize %}
+
+<transition name="megamenu">
+  <div v-show="megamenuToggles['{{ parent_handle }}']" @mouseleave="closeAllMegamenus" parent-item="{{ parent_handle }}" class="megamenu">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-8">
+          {% render 'megamenu__links' %}
+        </div>
+        <div class="col-md-4 d-none d-lg-block">
+          {% render 'megamenu__images' %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</transition>
+
+{% schema %}
+{
+  "name": "Megamenu 1",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu"
+    },
+    {
+      "type": "text",
+      "id": "attach_to",
+      "label": "Parent menu item",
+      "info": "This should be a unique menu item from the parent menu."
+    },
+    {
+      "type": "header",
+      "content": "Call To Actions"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add image blocks with links."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "cta",
+      "name": "Call To Action",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

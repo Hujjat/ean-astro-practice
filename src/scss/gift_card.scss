@@ -1,0 +1,35 @@
+@charset 'UTF-8';
+
+/**
+ * MindArc Astro | Built with Slate
+ */
+
+@import './abstracts/fonts';
+@import './abstracts/variables';
+
+// Vendors
+// @import './vendor/fontawesome';
+@import './vendor/bootstrap';
+
+
+// Abstracts
+@import './abstracts/mixins';
+@import './abstracts/functions';
+
+
+// Base
+@import './base/reset';
+@import './base/development';
+@import './base/animations';
+@import './base/helpers';
+@import './base/layout';
+@import './base/typography';
+
+
+// Components
+@import './components/buttons';
+@import './components/icons';
+
+
+// Templates
+@import './templates/gift_card';

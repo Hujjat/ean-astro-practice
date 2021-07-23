@@ -1,0 +1,105 @@
+{% render 'breadcrumbs' %}
+
+<div vue-init v-cloak>
+  <collection inline-template {%- if collection.handle != blank %} collection-handle="{{ collection.handle }}" {%- endif %} default-sort="{{ collection.default_sort_by }}">
+    <div class="collection">
+      <div class="row">
+        <aside class="collection__sidebar col-md-3">
+          {% render 'collection__sidebar' %}
+        </aside>
+
+        <section class="collection__main col-md-9">
+          <div class="collection__toolbar d-md-flex justify-content-between mb-5">
+            <h1>{{ collection.title }}</h1>
+
+            <div class="collection__sort-by">
+              <label for="sort-by">{{ 'collections.sorting.title' | t }}</label>
+
+              {%- capture sort_options -%}created|{{ 'collections.sorting.date_descending' | t }}^manual|{{ 'collections.sorting.featured' | t }}^best-selling|{{ 'collections.sorting.best_selling' | t }}^price-descending|{{ 'collections.sorting.price_descending' | t }}^price-ascending|{{ 'collections.sorting.price_ascending' | t }}^title-ascending|{{ 'collections.sorting.az' | t }}^title-descending|{{ 'collections.sorting.za' | t }}{%- endcapture -%}
+              {% assign sort_options = sort_options | split: '^' %}
+              <select v-model="sortValue" @change="sortCollection()" id="sort-by">
+                {% for option in sort_options %}
+                  {% assign option_data = option | split: '|' %}
+                  {% assign option_value = option_data | first %}
+                  {% assign option_text = option_data | last %}
+                  <option value="{{ option_value }}" name="sort_options" >{{ option_text | upcase }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div v-if="isLoading" class="text-center">
+            <p class="lead">{{ 'collections.general.loading_products' | t }}</p>
+            <div class="loading-animation">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+            </div>
+          </div>
+
+          <div v-else-if="filteredProducts.length" v-infinite-scroll class="collection__product-list row">
+            <div v-for="item in productsShowing" :key="item.id" class="col-6 col-md-3">
+              <product-item inline-template :product="item">
+                {% render 'product-item' %}
+              </product-item>
+            </div>
+          </div>
+
+          <template v-else-if="!isLoading && !filteredProducts.length">
+            <p class="lead text-center">{{ 'collections.general.no_matches' | t }}</p>
+          </template>
+        </section>
+      </div>
+    </div>
+  </collection>
+</div>
+
+{% schema %}
+  {
+    "name": "Collection",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Sidebar"
+      },
+      {
+        "type": "link_list",
+        "id": "filter_menu",
+        "label": "Collection Menu"
+      },
+      {
+        "type": "header",
+        "content": "Filters"
+      },
+      {
+        "type": "paragraph",
+        "content": "Specify the filters to show in the sidebar."
+      }
+    ],
+    "blocks": [
+      {
+        "type": "filter",
+        "name": "Filter",
+        "limit": 5,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "filter_tags",
+            "label": "Filter tags",
+            "info": "Add a comma-separated list of product tags. Only the tags found in the collection will be displayed as filters ([?](https://help.outofthesandbox.com/hc/en-us/articles/115008642047))"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_filter_swatches",
+            "label": "Display colour swatches"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

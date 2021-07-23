@@ -1,0 +1,72 @@
+{%- assign paginate_by = 12 -%}
+
+{% render 'breadcrumbs' %}
+
+<section class="row justify-content-center text-center mb-md-4">
+  <div class="col-md-4">
+    <h1>
+      {% if search.performed %}
+        <span class="sr-only">{{ 'general.search.heading' | t: count: search.results_count }}:</span>
+          {{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
+      {% else %}
+        {{ 'general.search.title' | t }}
+      {% endif %}
+    </h1>
+
+    <form action="/search" method="get" role="search">
+      <div class="field">
+        <label for="Search">
+          {{ 'general.search.placeholder' | t }}
+        </label>
+        <input type="search"
+                name="q"
+                id="Search"
+                class="form-control"
+                value="{{ search.terms | escape }}"
+                placeholder="{{ 'general.search.placeholder' | t }}">
+        <input type="hidden" name="type" value="product" />
+      </div>
+    </form>
+  </div>
+</section>
+
+<section vue-init>
+  {% paginate search.results by paginate_by %}
+    {% if search.performed %}
+      {% if search.results_count == 0 %}
+        <p class="text-center">{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+
+      {% else %}
+        <div class="row">
+          {% for product in search.results %}
+            <div class="col-6 col-md-3">
+              <product-item inline-template :product='{{ product | json | escape }}'>
+                {% render 'product-item' %}
+              </product-item>
+            </div>
+          {% endfor %}
+        </div>
+
+        {% render 'pagination', paginate: paginate %}
+      {% endif %}
+    {% endif %}
+  {% endpaginate %}
+</section>
+
+
+{% schema %}
+{
+  "name": "Search",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Sidebar"
+    },
+    {
+      "type": "link_list",
+      "id": "filter_menu",
+      "label": "Collection Menu"
+    }
+  ]
+}
+{% endschema %}

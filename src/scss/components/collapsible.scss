@@ -1,0 +1,21 @@
+.collapsible {
+  &__title {
+    @extend .h5;
+    padding: $gutter / 2 0;
+    cursor: pointer;
+  }
+
+  &__toggle {
+    transition: $transition;
+
+    &:before {
+      content: '\e912';
+      font-family: $font-icons;
+    }
+
+    &--active {
+      transform: rotate(180deg);
+    }
+  }
+}
+

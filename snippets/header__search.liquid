@@ -1,0 +1,81 @@
+<header-search inline-template :is-search-open="isSearchOpen" default-value="{{ search.terms | escape }}">
+  <div>
+    <div v-if="isSearchOpen" class="mask" @click="toggleSearch()"></div>
+
+    <transition name="slide-down">
+      <div v-show="isSearchOpen" class="header-search">
+        <form action="/search" method="get" role="search" class="search-form">
+          <div class="container d-flex align-items-center justify-content-between">
+            <button type="submit">
+              {% render 'icon-search' %}
+              <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+            </button>
+
+            <label for="Search-{{ section.id }}" class="label-hidden">
+              {{ 'general.search.placeholder' | t }}
+            </label>
+
+            <input type="search"
+              v-model="search"
+              ref="search"
+              name="q"
+              placeholder="{{ 'general.search.placeholder' | t }}"
+              autocomplete="off"
+              value="{{ search.terms | escape }}">
+            <input type="hidden" name="type" value="product" />
+
+            <button @click="toggleSearch()" type="button" class="d-none d-lg-block">
+              {% render 'icon-close' %}
+              <span class="icon-fallback-text">{{ 'general.search.close' | t }}</span>
+            </button>
+          </div>
+        </form>
+
+        <div v-if="search" class="header-search__results py-5">
+          <div class="container">
+            <div v-if="isSearchLoading" class="text-center">
+              <p class="lead">{{ 'general.search.loading' | t }}</p>
+              <div class="loading-animation">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+              </div>
+            </div>
+
+            <div v-else>
+              <div v-if="!results.length" class="text-center">
+                <p>{{ 'general.search.no_results' | t }}</p>
+              </div>
+
+              <div v-else>
+                <div class="row">
+                  <div v-for="product in results" :key="product.id" class="col-6 col-lg-3 text-center mb-3">
+                    <a :href="product.url" :title="product.title">
+                      <img v-if="product.image" :data-src="product.image | imageSize('medium')" :alt="product.title" class="lazyload">
+                      <template v-else>{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</template>
+                    </a>
+                    <div class="product-item__name product-name mt-2">
+                      <a :href="product.url" :title="product.title">
+                        ${ product.title }
+                      </a>
+                    </div>
+                    <div>
+                      <span>
+                        <s v-if="product.compare_at_price && product.compare_at_price > product.price">${ product.compare_at_price | currency }</s>
+                        <span>${ product.price | currency }</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-center mt-3">
+                  <a :href="'/search?q=' + search + '&type=product'" class="button">{{ 'general.search.view_all_results' | t }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+</header-search>

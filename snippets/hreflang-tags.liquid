@@ -1,0 +1,18 @@
+{%- comment -%}
+Delete extra unused settings below as appropriate
+Also remove from the SEO section of config\settings_schema.json
+{%- endcomment -%}
+
+{% assign url_handle = canonical_url | remove: shop.url  | remove_first: "/" %}
+{%- if settings.hreflang_us != blank -%}
+  <link rel="alternate" hreflang="{{settings.hreflang_us_language}}" href="{{ settings.hreflang_us }}/{{ url_handle }}" />
+{%- endif -%}
+{%- if settings.hreflang_au != blank -%}
+  <link rel="alternate" hreflang="{{settings.hreflang_au_language}}" href="{{ settings.hreflang_au }}/{{ url_handle }}" />
+{%- endif -%}
+{%- if settings.hreflang_nz != blank -%}
+  <link rel="alternate" hreflang="{{settings.hreflang_nz_language}}" href="{{ settings.hreflang_nz }}/{{ url_handle }}" />
+{%- endif -%}
+{%- if settings.hreflang_int != blank -%}
+  <link rel="alternate" hreflang="{{settings.hreflang_int_language}}" href="{{ settings.hreflang_int }}/{{ url_handle }}" />
+{%- endif -%}
